@@ -21,23 +21,53 @@
     }
   },
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "phpstan/extension-installer": true
+    }
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/SimplikoCZ/wavevision_props-control.git"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/SimplikoCZ/wavevision-utils.git"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/SimplikoCZ/wavevision-nette-tests.git"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/SimplikoCZ/wavevision-di-service-annotation"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/SimplikoCZ/wavevision-coding-standard.git"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/SimplikoCZ/wavevision-development-utils.git"
+    }
+  ],
   "require": {
-    "php": ">=7.4",
-    "nette/application": "^3.0",
-    "wavevision/props-control": "^6.0",
-    "wavevision/utils": "^2.13"
+    "php": ">=8.5",
+    "nette/application": "*",
+    "wavevision/props-control": "^7.0",
+    "wavevision/utils": "^3.0"
   },
   "require-dev": {
-    "nette/bootstrap": "^3.0",
-    "php-coveralls/php-coveralls": "^2.2",
-    "phpstan/extension-installer": "^1.0",
-    "phpstan/phpstan-nette": "^0.12.9",
-    "phpstan/phpstan-phpunit": "^0.12.16",
-    "wavevision/coding-standard": "^6.0",
-    "wavevision/di-service-annotation": "^4.0",
-    "wavevision/nette-tests": "^3.1"
+    "nette/bootstrap": "*",
+    "php-coveralls/php-coveralls": "*",
+    "phpstan/extension-installer": "*",
+    "phpstan/phpstan-nette": "*",
+    "phpstan/phpstan-phpunit": "*",
+    "wavevision/coding-standard": "^7.0",
+    "wavevision/di-service-annotation": "^5.0",
+    "wavevision/nette-tests": "^4.0"
   },
   "extra": {
     "phpstan": {}

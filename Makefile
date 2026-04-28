@@ -10,6 +10,12 @@ temp=temp
 tests=tests
 dirs:=$(src) $(tests) $(examples)
 
+ifndef CI
+docker=docker compose run --rm tests 
+else
+docker=
+endif
+
 all:
 	 @$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
 
@@ -30,21 +36,21 @@ fix: reset check-syntax phpcbf phpcs phpstan test
 # QA
 
 check-syntax:
-	$(bin)/parallel-lint -e $(php) $(dirs)
+	$(docker) $(bin)/parallel-lint -e $(php) $(dirs)
 
 phpcs:
-	$(bin)/phpcs -sp --standard=$(codeSnifferRuleset) --extensions=php $(dirs)
+	$(docker) $(bin)/phpcs -sp --standard=$(codeSnifferRuleset) --extensions=php $(dirs)
 
 phpcbf:
-	$(bin)/phpcbf -spn --standard=$(codeSnifferRuleset) --extensions=php $(dirs) ; true
+	$(docker) $(bin)/phpcbf -spn --standard=$(codeSnifferRuleset) --extensions=php $(dirs) ; true
 
 phpstan:
-	$(bin)/phpstan analyze $(dirs)
+	$(docker) $(bin)/phpstan analyze $(dirs)
 
 # Tests
 
 test:
-	$(bin)/phpunit
+	$(docker)
 
 test-coverage: reset
 	$(bin)/phpunit --coverage-html=$(coverage)
@@ -63,3 +69,11 @@ else
 endif
 
 ci: check-syntax phpcs phpstan test-coverage-report
+
+# Docker test sandbox
+
+docker-build:
+	docker compose build --no-cache
+
+docker-test: docker-build
+	docker compose run --rm tests

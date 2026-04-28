@@ -1,0 +1,12 @@
+services:
+  tests:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: wavevision-links-tests
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command: ["vendor/bin/phpunit"]
+    # Optional: keep container alive for debugging
+    # tty: true
