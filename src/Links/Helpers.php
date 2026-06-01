@@ -37,7 +37,7 @@ class Helpers
 
 	public static function isActiveModule(Component $component, string $module): bool
 	{
-		return Strings::startsWith($component->presenter->name, $module);
+		return Strings::startsWith($component->presenter->getName(), $module);
 	}
 
 	public static function isActiveLink(Component $component, Link $link): bool
